@@ -1,6 +1,7 @@
-import axios from 'axios'
+import axios from 'axios';
 
-export const getAllTasks = () =>{
+export const getAllTask = () => {
+    return axios.get('http://localhost:8000/tasks/api/v1/tasks')
+} 
 
-    return axios.get('http://localhost:8000/base.html')
-}
+export default getAllTask;
