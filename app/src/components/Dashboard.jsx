@@ -1,11 +1,10 @@
 import React from "react";
-import '../App.css';
 
 export function DashboardContent(){
     return (
-        <section className="main">
-            Estas en la pagina de tablero.
-        </section>
+        <>
+        <h1>Ola</h1>
+        </>
     )
 }
 
