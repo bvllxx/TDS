@@ -3,7 +3,8 @@ import {BrowserRouter,Routes,Route, Navigate} from "react-router-dom";
 import React from 'react';
 import ProyectContent from './components/ListProyects';
 import DashboardContent from './components/Dashboard';
-import LoginPage from './pages/Login';
+import ProyectView from './components/ProyectView';
+import Aut from './api/AuthApi';
 
 
 function App() {
@@ -11,8 +12,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Navigate to="/login"/>}/>
-        <Route path='/login' element={<LoginPage/>}/>
+        <Route path='/login' element={<Aut/>}/>
         <Route path="/proyects" element={  <MainContent> <ProyectContent /> </MainContent> } />
+        <Route path="/proyects/edit" element={  <MainContent> <ProyectView /> </MainContent> } />
         <Route path="/dashboard" element={ <MainContent> <DashboardContent /> </MainContent> } />
       </Routes>
     </BrowserRouter>

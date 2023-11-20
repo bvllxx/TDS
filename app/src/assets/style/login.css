@@ -1,22 +1,21 @@
-/* Estilo para el contenedor principal */
+
 .container-log {
     display: flex;
     align-items: center;
+    flex-direction: column;
     justify-content: center;
     height: 100vh;
-    background-color: #750f0f; /* Color de fondo */
+    background-color: #1d1d1b; 
   }
   
-  /* Estilo para el formulario de inicio de sesión */
   .login-form {
-    background-color: #2a2b2c; /* Fondo del formulario */
+    background-color: #2a2b2c; 
     padding: 20px;
     color: white;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
   }
-  
-  /* Estilo para los campos de entrada */
+
   .log-input {
     width: 100%;
     padding: 10px;
@@ -25,20 +24,19 @@
     border-radius: 4px;
   }
   
-  /* Estilo para el botón de inicio de sesión */
-  .login-form button {
+  .btn-log {
     width: 100%;
     padding: 10px;
-    background-color: #27ae60; /* Color de fondo del botón */
-    color: #fff; /* Color del texto del botón */
+    background-color: #27ae60; 
+    color: #fff; 
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    margin-bottom: 20px;
   }
   
-  /* Estilo para el botón de inicio de sesión al pasar el ratón por encima */
-  .login-form button:hover {
-    background-color: #219150; /* Cambiar el color de fondo al pasar el ratón por encima */
+  .btn-log:hover {
+    background-color: #219150; 
   }
   
   .form-link {

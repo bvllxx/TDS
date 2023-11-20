@@ -25,7 +25,7 @@ export function ProyectContent(){
             <h1 className="li-title"> Finalizados </h1>
             <hr className="separator" />
             <ul className="pcards">
-                <ProyectCard status="finalizado" />
+                <ProyectCard status="finalizado"/>
             </ul>
         </div>
     </>

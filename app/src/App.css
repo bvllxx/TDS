@@ -1,19 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Exo+2&family=Inconsolata:wght@300&family=Josefin+Sans&family=Montserrat:ital,wght@0,300;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo+2&family=Inconsolata:wght@300&family=Josefin+Sans&family=Montserrat:ital,wght@0,300;1,300&family=Roboto&display=swap');
 
 body, html {
     margin: 0;
     padding: 0;
-    font-family: 'Exo 2', sans-serif;
+    font-family: Helvetica, "Trebuchet MS", Verdana, sans-serif;
     box-sizing: border-box;
     height: 100%;
+    user-select: none;
 }
 
 .separator {
-    border: none;
-    border-top: 2px solid #535151;
+    border-top: 3px solid #ff7300;
     border-radius: 1em;
     height: 2px;
-    margin: 12px 0px;
 }
 
 #root {
@@ -27,7 +26,7 @@ body, html {
 }
 
 .aside {
-    background-color: #272829;
+    background-color: #1d1d1b;
     color: white;
     padding: 5px;
     margin: 0;
@@ -59,11 +58,12 @@ body, html {
 }
 
 .menu-link:active {
-    background-color: #353131;
+    background-color: #ff7300;
 }
 
 .menu-item:hover {
-    background-color: #353131;
+    width: 100%;
+    background-color: #ff7300;
 }
 
 .aside h1{
@@ -84,13 +84,15 @@ body, html {
 
 .li-container {
     text-align: flex-start;
-    background-color: #2a2b2c;
-    border-radius: 0.8em;
+    background-color: #1d1d1b;
+    width: 250px;
+    border-radius: 0.5em;
     margin: 1.5px;
     margin-right: 30px;
     padding: 15px;
-    overflow-y: scroll;
-    box-shadow: 10px 5px 10px #1f1e1e;
+    box-shadow: 5px 7px 26px 5px rgba(0,0,0,1);
+    -webkit-box-shadow: 5px 7px 26px 5px rgba(0,0,0,1);
+    -moz-box-shadow: 5px 7px 26px 5px rgba(0,0,0,1);
 }
 
 .pcards {
@@ -103,15 +105,35 @@ body, html {
 
 .pcard {
     transition: box-shadow 0.2s ease;
-    box-shadow: 10px 5px 10px 10px #1f1e1e;
-    background-color: #555;
+    background-color: #3b3b39;
     border-radius: 0.5em;
-    padding: 8px 16px;
     max-width: 100%;
-    cursor: pointer;
     width: 230px;
-    height: 100px;
-    margin: 5px 0;
+    height: 75px;
+    margin: 10px 0;
+    
+}
+.pcard p{
+    padding-top: 5px;
+    padding-left: 5px;
+}
+.more {
+    background-color: #af5c19a4;
+    padding: 5px;
+    border-radius: 0 0 0.5em 0.5em;
+    text-decoration: underline;
+    display: flex;
+    height: 35px;
+    cursor: pointer;
+}
+
+.edit-link {
+    text-decoration: none;
+    color: white;
+}
+
+.edit-link:hover {
+    color: rgb(122, 122, 122);
 }
 
 .li-container::-webkit-scrollbar {
@@ -140,7 +162,9 @@ body, html {
 }
 
 .pcard:hover {
-    box-shadow: 20px 20px 20px  20px rgba(0, 0, 0, 0.3);
+    box-shadow: 5px 7px 26px 5px rgba(0,0,0,1);
+    -webkit-box-shadow: 5px 7px 26px 5px rgba(0,0,0,1);
+    -moz-box-shadow: 5px 7px 26px 5px rgba(0,0,0,1);
 }
 
 .content {
@@ -154,14 +178,17 @@ body, html {
     justify-content: space-between;
     align-items: center;
     padding-left: 10px;
-    background-color: #2a2b2c;
+    background-color: #2a2c2e;
     height: 65px;
     text-decoration: none;
+    
 }
 
 .header-icon {
     display: flex;
     align-items: center;
+    width: 100px;
+    height: 100px;
 }
 
 .header h1{
@@ -176,48 +203,38 @@ body, html {
     flex: 1;
     color: white;
     padding: 40px;
-    background-color: #750f0f;   
+    background-color: #272724;
 }
 
 .bi.bi-three-dots {
     position: absolute;
     font-size: 25px;
+    cursor: pointer;
     text-decoration: none;
     color: white;
 }
 
-.bi-person-circle {
-    padding: 5px;
-    font-size: 30px;
+.bi-box-arrow-right {
+    padding-right: 30px;
+    padding-left: 30px;
+    font-size: x-large;
     cursor: pointer;
 }
 
-.form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 10px;
+.bi-plus-circle {
+    padding-right: 10px;
+    font-size: x-large;
+    cursor: pointer;
 }
 
-.form-container input,
-.form-container textarea {
-    margin-bottom: 10px;
-    background-color: #353131;
-    border: none;
-    color: white;
-}
-
-.btn-add {
-    background-color: #2a2b2c;
-    border: transparent;
-    border-radius: 0.4vh;
-    width: 100px;
-    height: 40px;
-    color: white;
+.bi-thrash {
+    cursor: pointer;
 }
 
 .edit-card{
-    display: flex;
-    z-index: 2000;
-    background-color: #555;
+    width: 500px;
+    height: 700px;
+    border-radius: 0.5em;
+    background-color: #1d1d1b;
+    box-shadow: 5px 1px 10px 10px #1f1e1e;
 }
