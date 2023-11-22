@@ -5,18 +5,17 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
 
 const taskApi = axios.create({
-    baseURL: 'http://localhost:8000/tasks/api/v1/tasks',
+    baseURL: 'http://localhost:8000/tasks/',
     withCredentials:true
 })
 
-export const getAllTask = () => {return taskApi.get('/')} 
+export const getProyects = () => {return taskApi.get('/')};
 
-export const getTask = (id) => {return taskApi.get(`/${id}`)} 
+export const addProyects = () => {};
 
-export const addTask = (task) => {return taskApi.post('/',task)}
+export const updateProyects = () => {};
 
-export const deleteTask = (id) => {taskApi.delete(`/${id}`)}
+export const deleteProjects = () => {};
 
-export const updateTask = (id,task) => {taskApi.put(`/${id}`,task)}
 
-export default getAllTask;
+export default getProyects;

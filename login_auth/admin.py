@@ -4,12 +4,16 @@ from .models import AppUser
 
 class AppUserAdmin(UserAdmin):
     list_display = ('rut', 'email', 'first_name', 'second_name', 'is_active', 'is_staff')
-    fieldsets = (
-        (None, {'fields': ('email', 'rut', 'password', 'first_name', 'second_name')}),
+    fieldsets = ((None, {'fields': ('email', 'rut', 'password', 'first_name', 'second_name')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser')})
     )
-
-    # Agrega el siguiente atributo para especificar el campo de ordenamiento
-    ordering = ('email',)  # Puedes cambiar 'email' por el campo que desees
+    
+    ordering = ('email',) 
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'rut', 'password1', 'password2'),
+        }),
+    )
 
 admin.site.register(AppUser, AppUserAdmin)

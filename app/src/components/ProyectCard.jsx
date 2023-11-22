@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {getAllTask,deleteTask} from "../api/TaskApi";
+import {getAllTask} from "../api/TaskApi";
+import axios from "axios";
+import Cookies from 'js-cookie';
+
+const getCsrfTokenFromCookies = () => {
+  return Cookies.get('csrftoken');
+};
+
 
 function ProyectCard({ status }) {
+
   const [tasks, setTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
   const [taskID, setSelectedTaskId] = useState();
+  const csrfToken = getCsrfTokenFromCookies();
+
 
   useEffect(() => {
     async function loadTasks() {
@@ -17,6 +27,29 @@ function ProyectCard({ status }) {
   const handleTaskClick = (task) => {
     setSelectedTask(task);
     setSelectedTaskId(task.id);
+  };
+
+  const handleDelete = async (taskId) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8000/tasks/delete/${taskId}/`,
+        {
+          headers: {
+            'X-CSRFToken': csrfToken,
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true,
+        }
+        );
+      if (response.status === 204) {
+        setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+        console.log('Tarea eliminada con éxito');
+      } else {
+        console.error('Error al eliminar la tarea:', response.data);
+      }
+    } catch (error) {
+      console.error('Error al eliminar la tarea:', error.message);
+    }
   };
 
   return (
@@ -65,11 +98,21 @@ function ProyectCard({ status }) {
                 <div className="modal-body">
                   {selectedTask && (
                     <>
-                      <p>Deskripsion: {selectedTask.description}</p>
-                      <p>Integrantes</p>
-                      <p>Fecha de inicio</p>
-                      <p>Fecha de termino</p>
-                      <p>Status: {selectedTask.status}</p>
+                      <h5>Descripción </h5>
+                      <small>{selectedTask.description}</small>
+                      <hr/>
+                      
+                      <h5>Fecha de inicio </h5>
+                      <small>{selectedTask.begin_date}</small>
+                      <hr/>
+
+                      <h5>Fecha de termino </h5>
+                      <small>{selectedTask.end_date}</small>
+                      <hr/>
+
+                      <h5>Fuente de financiamiento </h5>
+                      <small>{selectedTask.founding_src_name}</small>
+                      
                     </>
                   )}
                 </div>
@@ -77,15 +120,12 @@ function ProyectCard({ status }) {
                 <div className="modal-footer  d-flex justify-content-between">
                 <Link 
                 className="edit-link" 
-                to={{
+                to={{ 
                 pathname: "/proyects/edit",
-                state: {taskId: taskID}}}>
+                state: { taskId: taskID }
+                }}>
                   <i className="bi bi-pencil-square" data-bs-dismiss="modal"> </i></Link>
-                  <i className="bi bi-trash edit-link" type="button" data-bs-dismiss="modal" onClick={async () => {
-                    const accept = window.confirm('Seguro que desea eliminar?');
-                    accept && (
-                      await deleteTask(task.id)
-                    )}}></i>
+                  <i className="bi bi-trash edit-link" type="button" data-bs-dismiss="modal" onClick={() => handleDelete(task.id)}></i>
                 </div>
               </div>
             </div>
