@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Exo+2&family=Inconsolata:wght@300&family=Josefin+Sans&family=Montserrat:ital,wght@0,300;1,300&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;700;800&family=Montserrat:ital,wght@0,300;1,300&display=swap');
 
 body, html {
     margin: 0;
     padding: 0;
-    font-family: Helvetica, "Trebuchet MS", Verdana, sans-serif;
+    font-family: 'Gothic A1', sans-serif;
     box-sizing: border-box;
     height: 100%;
     user-select: none;
@@ -28,14 +28,15 @@ body, html {
 .aside {
     background-color: #1d1d1b;
     color: white;
-    padding: 5px;
     margin: 0;
 }  
 
 .lmenu {
     list-style: none;
-    padding: 15px;
-    margin-bottom: 600px;
+    margin-top: -20px;
+    height: 700px;
+    font-weight: 900;
+    background-color: #2c2c2a;
 }
 
 .menu-item{
@@ -43,11 +44,8 @@ body, html {
     height: 50px;
     display: flex;
     align-items: center;
-    padding-left: 10px;
     font-size: 18px;
-    text-align: center;
-    border-radius: 0.4em;
-    margin: 10px 0;
+    align-content: flex-start;
 }
 
 .menu-link {
@@ -75,6 +73,7 @@ body, html {
 
 .li-title{
     font-size: 1.5em;
+    font-weight: 900;
 }
 .pcards-content {
     display: flex;
@@ -175,12 +174,13 @@ body, html {
 
 .header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: flex-end;
     padding-left: 10px;
-    background-color: #2a2c2e;
+    background-color: #1d1d1b;
     height: 65px;
     text-decoration: none;
+    font-weight: 900;
     
 }
 
@@ -203,7 +203,7 @@ body, html {
     flex: 1;
     color: white;
     padding: 40px;
-    background-color: #272724;
+    background-color: #4F4A45;
 }
 
 .bi.bi-three-dots {
@@ -221,11 +221,6 @@ body, html {
     cursor: pointer;
 }
 
-.bi-plus-circle {
-    padding-right: 10px;
-    font-size: x-large;
-    cursor: pointer;
-}
 
 .bi-thrash {
     cursor: pointer;
@@ -237,4 +232,16 @@ body, html {
     border-radius: 0.5em;
     background-color: #1d1d1b;
     box-shadow: 5px 1px 10px 10px #1f1e1e;
+}
+
+.btn-add {
+    cursor: pointer;
+    width: fit-content;
+}
+
+.bi-plus-circle {
+    
+}
+.bmenu {
+    padding: 0;
 }

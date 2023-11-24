@@ -5,27 +5,42 @@ import ProyectCard from "./ProyectCard";
 export function ProyectContent(){
     return (
     <>
-        <div className="li-container">
-            <h1 className="li-title">Pendientes</h1>
-            <hr className="separator" />
-            <ul className="pcards">
-                <ProyectCard status="pendiente" />
+        <div
+        className="li-container">
+            <h1
+            className="li-title">Pendientes</h1>
+            <hr
+            className="separator" />
+            <ul
+            className="pcards">
+                <ProyectCard
+                status="pendiente" />
             </ul>
         </div>
         
-        <div className="li-container ">
-            <h1 className="li-title">En proceso</h1>
-            <hr className="separator"/>
-            <ul className="pcards">
-                <ProyectCard status="en_proceso" />
+        <div
+        className="li-container ">
+            <h1
+            className="li-title">En proceso</h1>
+            <hr
+            className="separator"/>
+            <ul
+            className="pcards">
+                <ProyectCard
+                status="en_proceso" />
             </ul>
         </div>
 
-        <div className="li-container ">
-            <h1 className="li-title"> Finalizados </h1>
-            <hr className="separator" />
-            <ul className="pcards">
-                <ProyectCard status="finalizado"/>
+        <div
+        className="li-container ">
+            <h1
+            className="li-title"> Finalizados </h1>
+            <hr
+            className="separator" />
+            <ul
+            className="pcards">
+                <ProyectCard
+                status="finalizado"/>
             </ul>
         </div>
     </>

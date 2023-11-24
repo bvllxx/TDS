@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import {getAllTask} from "../api/TaskApi";
-import axios from "axios";
-import Cookies from 'js-cookie';
-
-const getCsrfTokenFromCookies = () => {
-  return Cookies.get('csrftoken');
-};
+import { Link,useNavigate } from "react-router-dom";
+import { getProjects,deleteProject } from "../api/ProyectsApi";
 
 
 function ProyectCard({ status }) {
@@ -14,12 +8,13 @@ function ProyectCard({ status }) {
   const [tasks, setTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
   const [taskID, setSelectedTaskId] = useState();
-  const csrfToken = getCsrfTokenFromCookies();
+  const navigate = useNavigate();
 
+  
 
   useEffect(() => {
     async function loadTasks() {
-      const res = await getAllTask();
+      const res = await getProjects();
       setTasks(res.data);
     }loadTasks();
   }, []);
@@ -29,18 +24,13 @@ function ProyectCard({ status }) {
     setSelectedTaskId(task.id);
   };
 
+  const handleEdit = (taskId) => {
+    navigate("/proyects/edit", { state: { taskId: taskId } });
+  };
+
   const handleDelete = async (taskId) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:8000/tasks/delete/${taskId}/`,
-        {
-          headers: {
-            'X-CSRFToken': csrfToken,
-            'Content-Type': 'application/json',
-          },
-          withCredentials: true,
-        }
-        );
+      const response = await deleteProject(taskId)
       if (response.status === 204) {
         setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
         console.log('Tarea eliminada con éxito');
@@ -54,6 +44,9 @@ function ProyectCard({ status }) {
 
   return (
     <>
+
+      {/* Seccion encargada de renderizar las targetas con informacion sobre los proyectos  */ }
+
       {tasks.map((task) => (
         task.status === status && (
           <div
@@ -63,12 +56,15 @@ function ProyectCard({ status }) {
             <p>{task.title}</p>
 
             <div 
-            className="more d-flex justify-content-between" key={task.id}
+            className="more d-flex justify-content-between"
+            key={task.id}
             data-bs-toggle="modal"
             data-bs-target={`#exampleModal-${task.id}`}
             onClick={() => handleTaskClick(task)}>Ver mas<i className="bi bi-caret-right"></i></div>
           </div>
         )))}
+      
+      {/* Seccion encargada de renderizar el componente modal*/}
 
       {tasks.map((task) => (
         task.status === status && (
@@ -81,10 +77,15 @@ function ProyectCard({ status }) {
             aria-labelledby={`exampleModalLabel-${task.id}`}
             aria-hidden="true"
           >
-            <div className="modal-dialog">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h1 className="modal-title fs-5" id={`exampleModalLabel-${task.id}`}>
+            <div
+            className="modal-dialog">
+              <div
+              className="modal-content">
+                <div
+                className="modal-header">
+                  <h1 
+                  className="modal-title fs-5"
+                  id={`exampleModalLabel-${task.id}`}>
                     {selectedTask ? selectedTask.title : "NADA!!!!!"}
                   </h1>
                   <button
@@ -95,7 +96,8 @@ function ProyectCard({ status }) {
                   ></button>
                 </div>
 
-                <div className="modal-body">
+                <div
+                className="modal-body">
                   {selectedTask && (
                     <>
                       <h5>Descripción </h5>
@@ -117,15 +119,22 @@ function ProyectCard({ status }) {
                   )}
                 </div>
 
-                <div className="modal-footer  d-flex justify-content-between">
-                <Link 
-                className="edit-link" 
-                to={{ 
-                pathname: "/proyects/edit",
-                state: { taskId: taskID }
-                }}>
-                  <i className="bi bi-pencil-square" data-bs-dismiss="modal"> </i></Link>
-                  <i className="bi bi-trash edit-link" type="button" data-bs-dismiss="modal" onClick={() => handleDelete(task.id)}></i>
+                <div
+                className="modal-footer  d-flex justify-content-between">
+                  {console.log(taskID)}
+                  <navigate
+                  to="/proyects/edit"
+                  className="edit-link"
+                  onClick={() => handleEdit(task.id)}>
+                    <i
+                    className="bi bi-pencil-square"
+                    data-bs-dismiss="modal"></i>
+                  </navigate>
+                  <i
+                  className="bi bi-trash edit-link"
+                  type="button"
+                  data-bs-dismiss="modal"
+                  onClick={() => handleDelete(taskID)}></i>
                 </div>
               </div>
             </div>
