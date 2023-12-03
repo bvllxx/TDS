@@ -1,22 +1,22 @@
 .log-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #4F4A45; 
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  background-color: #4F4A45; 
 }
 
 .log-container {
+  display: flex;
+  flex-direction: column;
   background-color: #2a2c2e;
-  border-radius: 0.5em;
   color: white;
-  width: 500px;
-  height: 500px;
+  padding: 20px;
+  width: 800px;
+  height: 100vh;
 }
 
 .log-form{
   display: flex;
-  margin: 40px;
+  margin: 30px;
   flex-direction: column;
 }
-

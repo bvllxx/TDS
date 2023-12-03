@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from .serializer import UserRegisterSerializer, UserLoginSerializer, UserSerializer
 from rest_framework import permissions, status
 from .validations import custom_validation, validate_email, validate_password
+from .models import AppUser
 
 class UserRegister(APIView):
 	permission_classes = (permissions.AllowAny,)
@@ -20,6 +21,7 @@ class UserRegister(APIView):
 class UserLogin(APIView):
 	permission_classes = (permissions.AllowAny,)
 	authentication_classes = (SessionAuthentication,)
+	
 	def post(self, request):
 		data = request.data
 		assert validate_email(data)
@@ -44,3 +46,17 @@ class UserView(APIView):
 	def get(self, request):
 		serializer = UserSerializer(request.user)
 		return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+	
+class SignupCredentialVerification(APIView):
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = (SessionAuthentication,)
+	
+    def get(self, request):
+        user = request.user
+        email = request.GET.get('email')
+        existing_user = AppUser.objects.filter(email=email).exclude(user_id=user.user_id).first()
+
+        if existing_user:
+            return Response({'message': 'El correo electrónico ya está en uso.'}, status=status.HTTP_409_CONFLICT)
+        else:
+            return Response({'message': 'El correo electrónico está disponible.'}, status=status.HTTP_200_OK)

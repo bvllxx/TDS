@@ -8,10 +8,10 @@ def custom_validation(data):
 
     if not email or UserModel.objects.filter(email=email).exists():
         raise ValidationError('Correo en uso')
-    ##
+
     if not password or len(password) < 8:
-        raise ValidationError('Elije una contraseñña de minimo 8 caracteres')
-    ##
+        raise ValidationError('Elije una contraseña de minimo 8 caracteres')
+
     return data
 
 

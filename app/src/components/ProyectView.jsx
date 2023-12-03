@@ -1,17 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useLocation } from "react-router-dom";
+import { useParams,useNavigate} from 'react-router-dom';
+import { updateProject } from "../api/ProyectsApi";
 
 function ProyectView() {
 
   const {register, handleSubmit } = useForm();
-  const location = useLocation();
-  const taskId = location.state?.taskId;
-  console.log(taskId)
+  const navigate = useNavigate();
+  const params = useParams();
+
+  const onSubmit = async (data) => {
+    await updateProject(params.id,data)
+    navigate('/proyects/')
+  }
 
   return (
     <>
+      
       <div
       className="edit-card">
         <h4
@@ -19,7 +25,7 @@ function ProyectView() {
         <form
         className="p-3"
         data-bs-theme="dark" 
-        onSubmit={handleSubmit}>
+        onSubmit={handleSubmit(onSubmit)}>
           <div
           className="input-group flex-nowrap mb-3">
             <input

@@ -28,15 +28,15 @@ body, html {
 .aside {
     background-color: #1d1d1b;
     color: white;
-    margin: 0;
+    width: 200px;
+    
 }  
 
 .lmenu {
     list-style: none;
     margin-top: -20px;
-    height: 700px;
+    height: 782px;
     font-weight: 900;
-    background-color: #2c2c2a;
 }
 
 .menu-item{
@@ -44,6 +44,9 @@ body, html {
     height: 50px;
     display: flex;
     align-items: center;
+    justify-content: start;
+    padding-top: 25px;
+    padding-left: 25px;
     font-size: 18px;
     align-content: flex-start;
 }
@@ -52,7 +55,7 @@ body, html {
     text-decoration: none;
     color: white;
     padding: 8px 16px;
-    display: block;
+    
 }
 
 .menu-link:active {
@@ -110,6 +113,7 @@ body, html {
     width: 230px;
     height: 75px;
     margin: 10px 0;
+    cursor:grab;
     
 }
 .pcard p{
@@ -231,7 +235,7 @@ body, html {
     height: 700px;
     border-radius: 0.5em;
     background-color: #1d1d1b;
-    box-shadow: 5px 1px 10px 10px #1f1e1e;
+    box-shadow: 5px 1px 5px #1f1e1e;
 }
 
 .btn-add {
@@ -239,9 +243,6 @@ body, html {
     width: fit-content;
 }
 
-.bi-plus-circle {
-    
-}
 .bmenu {
     padding: 0;
 }

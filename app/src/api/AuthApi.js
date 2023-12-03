@@ -9,10 +9,12 @@ const client = axios.create({
   withCredentials: true
 });
 
-export const signin = (data) => { return client.post("register/",data )};
+export const signup = (data) => { return client.post("register/",data )};
 
 export const login = (data) => { return client.post("login/",data )}
 
 export const logout = () => {return client.post("logout/")}
+
+export const getUserInfo = () => {return client.get('user/')};
 
 export default login

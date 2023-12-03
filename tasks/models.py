@@ -7,7 +7,7 @@ class Proyects(models.Model):
     begin_date = models.DateField(auto_now=True, auto_now_add=False, null=True)
     end_date = models.DateField(auto_now_add=True,null=True)
     #involved_users = models.ManyToManyField(AppUser, related_name='proyects',null=True)
-    founding_src_name = models.CharField(max_length=30, default='N/A') 
+    founding_src_name = models.CharField(max_length=30, default='N/A')
 
     founding_choices = [
         ('interna', 'Interna'),

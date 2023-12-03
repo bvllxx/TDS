@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getProjects,deleteProject } from "../api/ProyectsApi";
+import dragAndDrop from "./drag";
 
 
 function ProyectCard({ status }) {
@@ -9,8 +10,6 @@ function ProyectCard({ status }) {
   const [selectedTask, setSelectedTask] = useState(null);
   const [taskID, setSelectedTaskId] = useState();
   const navigate = useNavigate();
-
-  
 
   useEffect(() => {
     async function loadTasks() {
@@ -25,7 +24,7 @@ function ProyectCard({ status }) {
   };
 
   const handleEdit = (taskId) => {
-    navigate("/proyects/edit", { state: { taskId: taskId } });
+    navigate(`/proyects/edit/${taskId}`);
   };
 
   const handleDelete = async (taskId) => {
@@ -52,6 +51,7 @@ function ProyectCard({ status }) {
           <div
             className="pcard"
             key={task.id}
+            draggable="true"
           >
             <p>{task.title}</p>
 
@@ -121,7 +121,6 @@ function ProyectCard({ status }) {
 
                 <div
                 className="modal-footer  d-flex justify-content-between">
-                  {console.log(taskID)}
                   <navigate
                   to="/proyects/edit"
                   className="edit-link"
@@ -139,8 +138,7 @@ function ProyectCard({ status }) {
               </div>
             </div>
           </div>
-        )
-      ))}
+        )))}
     </>
   );
 }
