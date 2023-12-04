@@ -18,28 +18,26 @@ export function LoginForm(){
     */
 
     function submitLogin(e) {
-        e.preventDefault();
-        try {
-            const userData = {
-            email: email,
-            password: password
-        }
-        login(userData)
+      e.preventDefault();
+      const userData = { email, password };
+  
+      login(userData)
         .then(function(res) {
-          setCurrentUser(true);
+          if (res && res.data && res.data.access) {
+            localStorage.setItem('accessToken', res.data.access);
+            setCurrentUser(true);
+          } else {
+            setErrorMessage('Error: Token de acceso no encontrado en la respuesta.');
+          }
         })
-        .catch (function (error){
-            if (error.response && error.response.status === 400) {
-                setErrorMessage('Credenciales inválidas. Por favor, verifica tu email y contraseña.');
-              } else {
-                setErrorMessage('Ha ocurrido un error. Inténtalo de nuevo más tarde.');
-              }
-        })
-      } catch {
-        setErrorMessage('Ha ocurrido un error al intentar iniciar sesión. Por favor, inténtalo de nuevo.');
-      }
+        .catch(function(error) {
+          if (error.response && error.response.status === 401) {
+            setErrorMessage('Credenciales inválidas. Por favor, verifica tu email y contraseña.');
+          } else {
+            setErrorMessage('Ha ocurrido un error al iniciar sesión.');
+          }
+        });
     }
-
       if (currentUser) {
         return (
             <Navigate to="/proyects" />
@@ -57,7 +55,7 @@ export function LoginForm(){
                 className="log-container">
                    
                     <form 
-                    className="log-form" data-bs-theme
+                    className="log-form" data-bs-theme="dark"
                     onSubmit={e => submitLogin(e)}>
                       
                         <h3>Iniciar sesion</h3>
@@ -90,7 +88,7 @@ export function LoginForm(){
                         </p>
 
                         <button
-                        className="btn-log"
+                        className="btn btn-success"
                         type="submit">Iniciar sesion</button>
                     
                     </form>

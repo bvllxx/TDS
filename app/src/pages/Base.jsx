@@ -3,20 +3,20 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { addProject } from "../api/ProyectsApi";
 import { logout } from "../api/AuthApi";
-import { getUserInfo } from "../api/AuthApi";
-import { useState,useEffect } from "react";
+/* import { getUserInfo } from "../api/AuthApi";
+import { useState,useEffect } from "react"; */
 
 export function MainContent({children}){
     
     const {register,handleSubmit} = useForm();
-    const [userInfo, setUserInfo] = useState([]); 
-
+    /* const [userInfo, setUserInfo] = useState([]);  */
+/* 
     useEffect(() => {
         async function fetchUserInfo(){
             const res = await getUserInfo();
             setUserInfo(res.data.user.groups);
         }fetchUserInfo();
-    }, []);
+    }, []); */
 
     const onSubmit = async (data) => {
         try {
@@ -28,7 +28,7 @@ export function MainContent({children}){
   
     return(
         <>
-        {console.log(userInfo)}
+        {/* {console.log(userInfo)} */}
         <div className="container-fluid p-0">
             
             <section

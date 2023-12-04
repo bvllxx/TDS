@@ -1,7 +1,6 @@
 .sign-body {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
   height: 100vh;
   background-color: #4F4A45; 
 }

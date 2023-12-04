@@ -3,8 +3,6 @@ from django.contrib.auth import get_user_model, authenticate
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import Group
 
-
-
 UserModel = get_user_model()
 
 class UserRegisterSerializer(serializers.ModelSerializer):

@@ -10,12 +10,13 @@ axios.defaults.withCredentials = true;
 
 /*Se crea una instancia de axios  con las credenciales para
 poder realizar las consultas al backend*/
-
+const accessToken = localStorage.getItem('accessToken');
 const taskApi = axios.create({
     baseURL: 'http://localhost:8000/tasks/',
     withCredentials:true,
     headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}` 
       }
 });
 

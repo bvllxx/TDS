@@ -5,16 +5,19 @@ axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.withCredentials = true;
 
 const client = axios.create({
-  baseURL: "http://localhost:8000/api-auth/",
-  withCredentials: true
+  baseURL: "http://localhost:8000/",
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json'
+  }
 });
 
-export const signup = (data) => { return client.post("register/",data )};
+export const signup = (data) => { return client.post('auth/register/',data)};
 
-export const login = (data) => { return client.post("login/",data )}
+export const login = (data) => { return client.post('api/token/',data )}
 
-export const logout = () => {return client.post("logout/")}
+export const logout = () => {return localStorage.removeItem('accessToken');}
 
-export const getUserInfo = () => {return client.get('user/')};
+export const getUserInfo = () => {return client.get()};
 
 export default login

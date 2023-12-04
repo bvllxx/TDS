@@ -371,10 +371,10 @@ export function SignupForm(){
 
                 <p
                 className="text-center">
-                  No tiene una cuenta?
+                  Ya posee una cuenta?
                   <Link
                   to="/login/">
-                    Registrarse
+                    Iniciar sesion
                   </Link>
                 </p>
 

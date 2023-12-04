@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from rest_framework_simplejwt.tokens import TokenUser
 
 class AppUserManager(BaseUserManager):
 	def create_user(self, rut, email, password=None, occupation=None, company_name=None, institution_type=None, **extra_fields):
@@ -73,5 +74,12 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
 	def __str__(self):
 		username = '{}, {}'.format(self.first_name, self.last_name)
 		return username
+	
+	@property
+	def id(self):
+		return self.pk if self.pk else None
 
+	@property
+	def token_user(self):
+	    return TokenUser(self)
  
