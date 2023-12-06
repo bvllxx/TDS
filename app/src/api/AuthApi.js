@@ -14,10 +14,10 @@ const client = axios.create({
 
 export const signup = (data) => { return client.post('auth/register/',data)};
 
-export const login = (data) => { return client.post('api/token/',data )}
+export const login = (data) => { return client.post('api/token/',data )};
 
-export const logout = () => {return localStorage.removeItem('accessToken');}
+export const logout = () => {return localStorage.removeItem('accessToken')};
 
-export const getUserInfo = () => {return client.get()};
+export const getUserInfo = () => {return client.get('auth/user/')};
 
 export default login

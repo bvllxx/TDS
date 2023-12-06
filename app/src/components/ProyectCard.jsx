@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getProjects,deleteProject } from "../api/ProyectsApi";
-import dragAndDrop from "./drag";
-
+import { useForm } from "react-hook-form";
+import { getProjects,deleteProject, updateProject } from "../api/ProyectsApi";
+import dragAndDrop, { handleDragStart } from "./Drag";
 
 function ProyectCard({ status }) {
 
   const [tasks, setTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
   const [taskID, setSelectedTaskId] = useState();
-  const navigate = useNavigate();
+  const [isEditing, setIsEditing] = useState(false);
+  const {register, handleSubmit } = useForm();
 
   useEffect(() => {
     async function loadTasks() {
@@ -18,28 +18,47 @@ function ProyectCard({ status }) {
     }loadTasks();
   }, []);
 
+  const onSubmit = async (data) => {
+    await updateProject(taskID,data)
+    window.location.reload();
+  }
+
   const handleTaskClick = (task) => {
     setSelectedTask(task);
     setSelectedTaskId(task.id);
+  }
+
+  const handleDescriptionEdit = () => {
+    setIsEditing(!isEditing);
   };
 
-  const handleEdit = (taskId) => {
-    navigate(`/proyects/edit/${taskId}`);
+  const handleFieldChange = (field, value) => {
+    setSelectedTask(prevTask => ({
+      ...prevTask,
+      [field]: value,
+    }));
   };
 
   const handleDelete = async (taskId) => {
     try {
-      const response = await deleteProject(taskId)
-      if (response.status === 204) {
-        setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
-        console.log('Tarea eliminada con éxito');
+      const confirmed = window.confirm('¿Estás seguro de que quieres eliminar esta tarea?');
+  
+      if (confirmed) {
+        const response = await deleteProject(taskId);
+        if (response.status === 204) {
+          setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+          console.log('Tarea eliminada con éxito');
+        } else {
+          console.error('Error al eliminar la tarea:', response.data);
+        }
       } else {
-        console.error('Error al eliminar la tarea:', response.data);
+        console.log('La eliminación de la tarea fue cancelada');
       }
     } catch (error) {
       console.error('Error al eliminar la tarea:', error.message);
     }
   };
+  
 
   return (
     <>
@@ -60,7 +79,7 @@ function ProyectCard({ status }) {
             key={task.id}
             data-bs-toggle="modal"
             data-bs-target={`#exampleModal-${task.id}`}
-            onClick={() => handleTaskClick(task)}>Ver mas<i className="bi bi-caret-right"></i></div>
+            onClick={() => handleTaskClick(task)}>Ver mas<i class="bi bi-chevron-right"></i></div>
           </div>
         )))}
       
@@ -77,15 +96,10 @@ function ProyectCard({ status }) {
             aria-labelledby={`exampleModalLabel-${task.id}`}
             aria-hidden="true"
           >
-            <div
-            className="modal-dialog">
-              <div
-              className="modal-content">
-                <div
-                className="modal-header">
-                  <h1 
-                  className="modal-title fs-5"
-                  id={`exampleModalLabel-${task.id}`}>
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h1 className="modal-title fs-5 fw-bold" id={`exampleModalLabel-${task.id}`}>
                     {selectedTask ? selectedTask.title : "NADA!!!!!"}
                   </h1>
                   <button
@@ -96,49 +110,87 @@ function ProyectCard({ status }) {
                   ></button>
                 </div>
 
-                <div
-                className="modal-body">
+                <div className="modal-body">
                   {selectedTask && (
                     <>
-                      <h5>Descripción </h5>
-                      <small>{selectedTask.description}</small>
-                      <hr/>
                       
-                      <h5>Fecha de inicio </h5>
-                      <small>{selectedTask.begin_date}</small>
-                      <hr/>
+                      {isEditing ? ( 
+                      <>
+                      <form
+                      onSubmit={handleSubmit(onSubmit)}
 
-                      <h5>Fecha de termino </h5>
-                      <small>{selectedTask.end_date}</small>
-                      <hr/>
+                      > 
+                        <h5>Titulo</h5>
+                        <input type="text" 
+                        {...register("title", { required: true })}
+                        onChange={(e) => handleFieldChange("title", e.target.value)}
+                        defaultValue={selectedTask ? selectedTask.title : ""}
+                        className="form-control mb-4 "
+                        />
 
-                      <h5>Fuente de financiamiento </h5>
-                      <small>{selectedTask.founding_src_name}</small>
-                      
+                        <h5 className="mt-2">Descripción</h5>
+                        <textarea
+                        onChange={(e) => handleFieldChange("description", e.target.value)}
+                        {...register("description", { required: true })}
+                        defaultValue={selectedTask ? selectedTask.description : ""}
+                        className="form-control mb-4 "
+                        ></textarea>
+
+                        <h6>Fuente de financiamiento </h6>
+
+                        <input 
+                        onChange={(e) => handleFieldChange("founding_src_name", e.target.value)}
+                        {...register("founding_src_name", { required: true })}
+                        defaultValue={selectedTask ? selectedTask.founding_src_name : ""}
+                        className="form-control mb-4"/>
+                        <div
+                        className="d-flex justify-content-between">
+                          <button 
+                          className="btn btn-success"
+                          type="submit"
+                          >Confirmar</button>
+                          <button 
+                          className="btn btn-danger"
+                          onClick={handleDescriptionEdit}
+                          >Cancelar</button>
+                        </div>
+
+                      </form>
+
+                      </>
+                      ) : (
+                        <>
+                        <div className="position-relative">
+                          <h5 className="mt-2 fw-medium">Descripción</h5>
+                          <p className="mb-5">{selectedTask.description}</p>
+                          <h6>Fuente de financiamiento</h6>
+                          <p className="mb-5">{selectedTask.founding_src_name}</p>
+                          <p className="position-absolute top-0 end-0 fs-6 fw-lighter"><small>{selectedTask.begin_date}</small></p>
+                        </div>
+                        
+                        </>
+                      )}
                     </>
                   )}
                 </div>
 
-                <div
-                className="modal-footer  d-flex justify-content-between">
-                  <navigate
-                  to="/proyects/edit"
-                  className="edit-link"
-                  onClick={() => handleEdit(task.id)}>
-                    <i
-                    className="bi bi-pencil-square"
-                    data-bs-dismiss="modal"></i>
-                  </navigate>
+                <div className="modal-footer  d-flex justify-content-between">
+                  <i
+                    className={`bi bi-pencil-square edit-link`}
+                    onClick={handleDescriptionEdit}
+                  ></i>
                   <i
                   className="bi bi-trash edit-link"
                   type="button"
                   data-bs-dismiss="modal"
                   onClick={() => handleDelete(taskID)}></i>
+                
                 </div>
               </div>
             </div>
           </div>
-        )))}
+        )
+      ))}
     </>
   );
 }

@@ -2,21 +2,23 @@
   display: flex;
   align-items: center;
   height: 100vh;
-  background-color: #4F4A45; 
+  background-color:#888888; 
 }
 
 .log-container {
   display: flex;
   flex-direction: column;
-  background-color: #2a2c2e;
+  background-color: #1d1d1b;
   color: white;
   padding: 20px;
-  width: 800px;
+  width: 1000px;
   height: 100vh;
 }
 
 .log-form{
   display: flex;
+  justify-content: center;
   margin: 30px;
+  width: 500px;
   flex-direction: column;
 }

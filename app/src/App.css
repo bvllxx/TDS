@@ -1,9 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;700;800&family=Montserrat:ital,wght@0,300;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
 
 body, html {
     margin: 0;
     padding: 0;
-    font-family: 'Gothic A1', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     box-sizing: border-box;
     height: 100%;
     user-select: none;
@@ -23,20 +24,52 @@ body, html {
     display: flex;
     min-height: 100%;
     flex: 1;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    background-color: #1d1d1b;
+    height: 65px;
+    text-decoration: none;
+    font-weight: 800;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.header-icon {
+    display: flex;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+}
+
+.header h1{
+    color: #e6e6e6;
+    font-size: 35px;
+    
+    padding: 0;
+}
+
+.navbar-brand {
+    display: flex;
 }
 
 .aside {
+    color: #c0c0c0;
+    width: 220px;
     background-color: #1d1d1b;
-    color: white;
-    width: 200px;
-    
+    font-family: lighter,'Montserrat', sans-serif;
 }  
+
+.aside-footer {
+    background-color: #292929;
+    height: 90px;
+}
 
 .lmenu {
     list-style: none;
-    margin-top: -20px;
-    height: 782px;
-    font-weight: 900;
 }
 
 .menu-item{
@@ -44,27 +77,23 @@ body, html {
     height: 50px;
     display: flex;
     align-items: center;
-    justify-content: start;
-    padding-top: 25px;
-    padding-left: 25px;
-    font-size: 18px;
+    padding-left: 20px;
+    font-size: 20px;
     align-content: flex-start;
 }
 
 .menu-link {
     text-decoration: none;
-    color: white;
+    color: #c0c0c0;
     padding: 8px 16px;
-    
-}
-
-.menu-link:active {
-    background-color: #ff7300;
 }
 
 .menu-item:hover {
-    width: 100%;
-    background-color: #ff7300;
+    color: #ff7300;
+}
+
+.menu-link:hover {
+    color: #ff7300;
 }
 
 .aside h1{
@@ -81,20 +110,18 @@ body, html {
 .pcards-content {
     display: flex;
     flex-direction: row;
-    height: 730px;
+    height: 830px;
 }
 
 .li-container {
     text-align: flex-start;
     background-color: #1d1d1b;
-    width: 250px;
-    border-radius: 0.5em;
+    width: 280px;
+    border-radius: 1em;
     margin: 1.5px;
     margin-right: 30px;
     padding: 15px;
-    box-shadow: 5px 7px 26px 5px rgba(0,0,0,1);
-    -webkit-box-shadow: 5px 7px 26px 5px rgba(0,0,0,1);
-    -moz-box-shadow: 5px 7px 26px 5px rgba(0,0,0,1);
+    box-shadow: inset 0.5 0.5em 1.5em rgba(0, 0, 0, .1),inset 0 5.125em 0.5em rgba(0, 0, 0, .15);
 }
 
 .pcards {
@@ -107,26 +134,28 @@ body, html {
 
 .pcard {
     transition: box-shadow 0.2s ease;
-    background-color: #3b3b39;
+    background-color: #2e2e2e;
+    color: #ff7300;
+    padding: 10px;
     border-radius: 0.5em;
     max-width: 100%;
-    width: 230px;
-    height: 75px;
+    font-size: 19px;
+    width: 260px;
+    height: 85px;
     margin: 10px 0;
-    cursor:grab;
-    
+    cursor: grab;
+    border: 1px solid #494949;
 }
-.pcard p{
-    padding-top: 5px;
-    padding-left: 5px;
-}
+
 .more {
-    background-color: #af5c19a4;
-    padding: 5px;
+    background-color: #2e2e2e;
+    width:100%;
+    font-size: 16px;
+    color: wheat;
+    padding-right: 10px;
     border-radius: 0 0 0.5em 0.5em;
-    text-decoration: underline;
+    border-top: 0.1px solid #494949;
     display: flex;
-    height: 35px;
     cursor: pointer;
 }
 
@@ -138,6 +167,33 @@ body, html {
 .edit-link:hover {
     color: rgb(122, 122, 122);
 }
+body::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+body::-webkit-scrollbar:vertical {
+    width:10px;
+}
+
+body::-webkit-scrollbar-button:increment,.contenedor::-webkit-scrollbar-button {
+    display: none;
+} 
+
+body::-webkit-scrollbar:horizontal {
+    height: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #494343;
+    border-radius: 20px;
+}
+
+body::-webkit-scrollbar-track {
+    border-radius: 10px;  
+}
+
+
+
 
 .li-container::-webkit-scrollbar {
     -webkit-appearance: none;
@@ -172,50 +228,20 @@ body, html {
 
 .content {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex: 1;
-}
-
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding-left: 10px;
-    background-color: #1d1d1b;
-    height: 65px;
-    text-decoration: none;
-    font-weight: 900;
-    
-}
-
-.header-icon {
-    display: flex;
-    align-items: center;
-    width: 100px;
-    height: 100px;
-}
-
-.header h1{
-    color: white;
-    font-weight: lighter;
-    font-size: 40px;
-    padding: 5px 0;
+    font-family: 'Montserrat', sans-serif;
+    box-shadow: inset 0 0.5em 1.5em rgba(0, 0, 0, .1),
+                inset 0 0.125em 0.5em rgba(0, 0, 0, .15);
 }
 
 .main {
     display: flex;
     flex: 1;
-    color: white;
+    color: #d8d8d8;
     padding: 40px;
-    background-color: #4F4A45;
-}
-
-.bi.bi-three-dots {
-    position: absolute;
-    font-size: 25px;
-    cursor: pointer;
-    text-decoration: none;
-    color: white;
+    background-color:#888888;
+    
 }
 
 .bi-box-arrow-right {
@@ -224,7 +250,6 @@ body, html {
     font-size: x-large;
     cursor: pointer;
 }
-
 
 .bi-thrash {
     cursor: pointer;
@@ -238,11 +263,29 @@ body, html {
     box-shadow: 5px 1px 5px #1f1e1e;
 }
 
-.btn-add {
-    cursor: pointer;
-    width: fit-content;
+.bmenu {
+    display: flex;
 }
 
-.bmenu {
-    padding: 0;
+.bmenu-item{
+    width: auto;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    padding-left: 20px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.bmenu-link {
+    padding-left: 16px;
+}
+
+.bmenu-item:hover{
+    color: #ff7300;
+}
+
+
+.menu-container {
+    margin-top: 616px;
 }

@@ -2,7 +2,6 @@
 const draggables = document.querySelectorAll(".pcard");
 const droppables = document.querySelectorAll(".li-container");
 
-
 const dragAndDrop = () => {
 
     draggables.forEach((task) => {

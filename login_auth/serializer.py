@@ -25,11 +25,14 @@ class UserLoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField()
 
-    def check_user(self, validated_data):
-        user = authenticate(email=validated_data['email'], password=validated_data['password'])
-        if not user:
-            raise ValidationError('Usuario no encontrado')
-        return user
+    def validate(self, validated_data):
+        email = validated_data['email']
+        password = validated_data['password']
+
+        user = authenticate(email=email, password=password)
+        if user:
+            return user
+        raise serializers.ValidationError('Credenciales inválidas')
 
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
