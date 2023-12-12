@@ -1,12 +1,8 @@
 from django.urls import path, include
-from rest_framework import routers
-from tasks import views
-from rest_framework.documentation import include_docs_urls 
-
-router = routers.DefaultRouter()
-router.register(r'tasks',views.TaskView, 'tasks')
-
+from .views import TaskListView, TaskCreateView, TaskUpdateView, TaskDeleteView
 urlpatterns = [
-    path("api/v1/",include(router.urls)),
-    path('docs/', include_docs_urls(title="task_api"))
+    path('list/', TaskListView.as_view(), name='task-list'),
+    path('create/', TaskCreateView.as_view(), name='task-create'),
+    path('update/<int:pk>/', TaskUpdateView.as_view(), name='task-update'),
+    path('delete/<int:pk>/', TaskDeleteView.as_view(), name='task-delete')
 ]
