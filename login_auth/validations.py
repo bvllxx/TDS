@@ -14,7 +14,6 @@ def custom_validation(data):
 
     return data
 
-
 def validate_email(data):
     email = data['email'].strip()
     if not email:

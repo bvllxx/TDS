@@ -10,8 +10,8 @@ export function MainContent({children}){
     const [selectedOption, setSelectedOption] = useState("Inacap");
     const [projects, setProjects] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-
     const [searchResults, setSearchResults] = useState([]);
+    const [currentUser, setCurrentUser] = useState(null);
 
     useEffect(() => {
         async function fetchProjects() {
@@ -19,6 +19,17 @@ export function MainContent({children}){
             setProjects(res.data);
         }
         fetchProjects();
+        async function fetchUserData() {
+            try {
+              // Obtener la información del usuario al iniciar sesión
+              const userResponse = await getUserInfo();
+              setCurrentUser(userResponse.data.user); // Almacenar la información del usuario en el estado
+              // Lógica adicional de obtención de proyectos, si es necesario...
+            } catch (error) {
+              console.error('Error al obtener la información del usuario', error.message);
+            }
+          }fetchUserData()
+        
     }, []);
 
     const handleSearch = (e) => {
@@ -32,6 +43,15 @@ export function MainContent({children}){
     const handleChange = (event) => {
         setSelectedOption(event.target.value);
     };
+
+    const handleLogout = async () => {
+        try {
+          await logout();
+          window.location.reload()
+        } catch (error) {
+          console.error('Error al cerrar sesión', error.message);
+        }
+      };
 
     const onSubmit = async (data) => {
         try {
@@ -56,7 +76,7 @@ export function MainContent({children}){
                 role="search" >
 
                     <input
-                    className="form-control me-2"
+                    className="form-control me-4"
                     type="search"
                     data-bs-theme="dark"
                     placeholder="Buscar proyecto..."
@@ -65,56 +85,64 @@ export function MainContent({children}){
                     onChange={handleSearch}/>
 
                     <button
-                    className="btn btn-dark"
+                    className="btn btn-dark me-4"
                     type="submit">Buscar</button>
 
-                    <Link
-                    className="text-white"
-                    to="/"
-                    onClick={logout}>
-                        <i
-                        className="bi bi-box-arrow-right"></i>
-                    </Link>
+
                 </form>
             </header>
             
             <section
             className="content">
-
+                
                 <section
                 className="aside">
+                    
                     <ul
                     className="lmenu p-0">
                         <li 
                         className="menu-item">
-                            <i class="bi bi-kanban"></i>
                             <Link 
                             className="menu-link"
-                            to="/proyects">Tablero</Link>
+                            to="/proyects">
+                                <i className="bi bi-kanban me-3"></i>
+                                Tablero
+                            </Link>
                         </li>
+
                         <li
                         className="menu-item">
-                            <i 
-                            className="bi bi-folder"></i>
                             <Link
                             className="menu-link"
-                            to="/dashboard">Proyectos</Link>
+                            to="/dashboard">
+                                <i className="bi bi-folder me-3"></i>
+                                Proyectos
+                            </Link>
                         </li>
                     </ul>
 
-                    <div className="menu-container d-flex">
-
-                        <ul className="bmenu">
+                    <div className="menu-container">
+                        {currentUser && (
+                        <>
+                        {currentUser.groups[0].name === "admins" && (
+                        <ul className="bmenu p-0">
+                            
+                            
                             <li
                             data-bs-toggle="offcanvas" 
                             data-bs-target="#offcanvasTop"
                             aria-controls="offcanvasTop"
                             className="bmenu-item">
-                                <i class="bi bi-plus-square"></i>
-                                <p className="bmenu-link">Añadir</p>
+                                <p className="bmenu-link">
+                                    <i className="bi bi-plus-square me-3"></i>
+                                    Añadir
+                                </p>
                             </li>
+
                         </ul>
-                        
+                        )} 
+                        </>
+                        )}
                         
                         <div
                         className="offcanvas offcanvas-end"
@@ -164,7 +192,7 @@ export function MainContent({children}){
                                     value={selectedOption}
                                     onChange={handleChange}
                                     aria-label="Fuente de financiamiento">
-                                        <option>Interna</option>
+                                        <option value={"interna"}>Interna</option>
                                         <option>Externa</option>
                                     </select>
 
@@ -176,12 +204,13 @@ export function MainContent({children}){
                                         placeholder="Nombre de la empresa"
                                         aria-describedby="addon-wrapping" />
                                     )}
-
                                     <button
-                                    className="btn btn-outline-success"
-                                    data-bs-dismiss="offcanvas"
-                                    type="submit"
-                                    onClick={() => {window.location.reload()}} >Añadir</button>
+                                            className="btn btn-outline-success"
+                                            data-bs-dismiss="offcanvas"
+                                            type="submit"
+                                            onClick={() => {window.location.reload()}}>
+                                                Añadir
+                                            </button>
                                 </form>
                             </div>
 
@@ -192,7 +221,21 @@ export function MainContent({children}){
                     <div
                     className="aside-footer"
                     >
-                        <p className="fw-medium text-center pt-4">Bienvenido usuario</p>
+                        <div className="dropdown ">
+                            <a href="/" className="d-flex align-items-center text-white text-decoration-none m-3 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                
+                                {currentUser && (
+                                <>
+                                <img src={`http://localhost:8000/${currentUser.profile_picture}`} alt="" width="32" height="32" className="rounded-circle me-2"/>
+                                <strong>{currentUser.first_name}</strong>
+                                </>
+                                )}
+                            </a>
+                            <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
+                                <li><Link className="text-white dropdown-item" to="/" onClick={handleLogout}>Cerrar sesion</Link></li>
+                                <li><hr className="dropdown-divider"/></li>
+                            </ul>
+                        </div>
 
                     </div>
 
@@ -203,13 +246,26 @@ export function MainContent({children}){
                     <div
                     className="pcards-content">
 
-                    {searchTerm ? searchResults.map((project) => (
-                    <div key={project.id} className="pcard">{project.title}</div>
-                    )) : children}
+                        {searchTerm ? searchResults.map((project) => (
+                        <div className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 justify-content-center" key={project.id} data-bs-theme="dark">
+                            <div className="list-group">
+                                <a href="/" className="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                                    <div className="d-flex gap-2 w-100 justify-content-between">
+                                        <div>
+                                        <h6 className="mb-0">{project.title} </h6>
+                                        <p className="mb-0 opacity-75">{project.description}</p>
+                                        </div>
+                                        <small className="opacity-50 text-nowrap">{project.begin_date}</small>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        )) : children}
                         
                     </div>
                 </section>
-            </section>          
+            </section>        
+
         </div>
         </>
     )

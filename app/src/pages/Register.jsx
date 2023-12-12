@@ -205,7 +205,7 @@ export function SignupForm(){
 
                     <label
                     for="validationCustom04"
-                    class="form-label">
+                    className="form-label">
                       Ocupacion
                     </label>
 
@@ -231,7 +231,7 @@ export function SignupForm(){
                     </select>
 
                     <div
-                    class="invalid-feedback">
+                    className="invalid-feedback">
                         Selecciona un estado válido.
                     </div>
 
@@ -242,7 +242,7 @@ export function SignupForm(){
 
                     <label
                     for="validationCustom04"
-                    class="form-label">
+                    className="form-label">
                       Institucion
                     </label>
 
@@ -269,7 +269,7 @@ export function SignupForm(){
                     </select>
 
                     <div
-                    class="invalid-feedback">
+                    className="invalid-feedback">
                         Selecciona un estado válido.
                     </div>
 

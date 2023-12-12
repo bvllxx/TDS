@@ -46,6 +46,7 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
 	last_name = models.CharField(max_length=15)
 	is_active = models.BooleanField(default=True)
 	is_staff = models.BooleanField(default=False)
+	profile_picture = models.ImageField(upload_to='pictures/', null=True, blank=True)
 
 	institution_type = models.CharField(
         max_length=20,

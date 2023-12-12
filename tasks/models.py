@@ -8,7 +8,7 @@ class Proyects(models.Model):
     begin_date = models.DateField(auto_now_add=True, null=True)
     end_date = models.DateField(null=True, blank=True)
     founding_src_name = models.CharField(max_length=30, default='N/A')
-    #involved_users = models.ManyToManyField(AppUser, related_name='proyects',null=True)
+    involved_users = models.ManyToManyField(AppUser, related_name='proyects', blank=True)
 
     founding_choices = [
         ('interna', 'Interna'),
@@ -32,7 +32,6 @@ class Proyects(models.Model):
         choices=status_choices,
         default='pendiente'
     )
-
 
     def __str__(self) -> str:
         return self.title

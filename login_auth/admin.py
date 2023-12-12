@@ -7,7 +7,7 @@ class AppUserAdmin(UserAdmin):
     list_display = ('email', 'first_name', 'last_name', 'occupation', 'is_staff')
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal Info', {'fields': ('first_name', 'last_name', 'rut', 'phone_number')}),
+        ('Personal Info', {'fields': ('first_name', 'last_name','profile_picture', 'rut', 'phone_number')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         ('Occupation', {'fields': ('occupation', 'company_name', 'institution_type')}),
     )

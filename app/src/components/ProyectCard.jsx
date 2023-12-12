@@ -1,22 +1,61 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { getProjects,deleteProject, updateProject } from "../api/ProyectsApi";
-import dragAndDrop, { handleDragStart } from "./Drag";
+import { getInvolvedUsers, getUserInfo } from "../api/AuthApi";
+import { Tooltip } from "bootstrap";
+
 
 function ProyectCard({ status }) {
 
-  const [tasks, setTasks] = useState([]);
-  const [selectedTask, setSelectedTask] = useState(null);
-  const [taskID, setSelectedTaskId] = useState();
-  const [isEditing, setIsEditing] = useState(false);
   const {register, handleSubmit } = useForm();
+  const [tasks, setTasks] = useState([]);
+  
+  const [selectedTask, setSelectedTask] = useState(null);  
+  const [taskID, setSelectedTaskId] = useState();
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [involvedUsers, setInvolvedUsers] = useState(['']);
 
   useEffect(() => {
+
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
+
     async function loadTasks() {
       const res = await getProjects();
       setTasks(res.data);
     }loadTasks();
-  }, []);
+
+    async function fetchUserData() {
+      try {
+        const userResponse = await getUserInfo();
+        setCurrentUser(userResponse.data.user); 
+      } catch (error) {
+        console.error('Error al obtener la información del usuario', error.message);
+      }
+    }fetchUserData();
+
+    async function fetchInvolvedUsersData(users) {
+      if (selectedTask) {
+        const usersInfo = await Promise.all(
+          users.map(async (userId) => {
+            try {
+              const userResponse = await getInvolvedUsers(userId);
+              
+              return userResponse.data;
+            } catch (error) {
+              console.error(`Error al obtener información del usuario con ID ${userId}`, error.message);
+              return null;
+            }
+          })
+        );
+        setInvolvedUsers(usersInfo);
+      }
+    }
+    
+    fetchInvolvedUsersData(selectedTask?.involved_users || []); 
+  }, [selectedTask]);
 
   const onSubmit = async (data) => {
     await updateProject(taskID,data)
@@ -57,9 +96,9 @@ function ProyectCard({ status }) {
     } catch (error) {
       console.error('Error al eliminar la tarea:', error.message);
     }
+    
   };
   
-
   return (
     <>
 
@@ -72,14 +111,14 @@ function ProyectCard({ status }) {
             key={task.id}
             draggable="true"
           >
-            <p>{task.title}</p>
+            <p className="fw-bold">{task.title}</p>
 
             <div 
             className="more d-flex justify-content-between"
             key={task.id}
             data-bs-toggle="modal"
             data-bs-target={`#exampleModal-${task.id}`}
-            onClick={() => handleTaskClick(task)}>Ver mas<i class="bi bi-chevron-right"></i></div>
+            onClick={() => handleTaskClick(task)}>Ver mas<i className="bi bi-chevron-right"></i></div>
           </div>
         )))}
       
@@ -113,7 +152,6 @@ function ProyectCard({ status }) {
                 <div className="modal-body">
                   {selectedTask && (
                     <>
-                      
                       {isEditing ? ( 
                       <>
                       <form
@@ -143,6 +181,19 @@ function ProyectCard({ status }) {
                         {...register("founding_src_name", { required: true })}
                         defaultValue={selectedTask ? selectedTask.founding_src_name : ""}
                         className="form-control mb-4"/>
+
+                        <h5>Estado</h5>
+
+                        <select
+                        className="form-select mb-3"
+                        {...register("status", { required: true })}
+                        defaultValue={selectedTask ? selectedTask.status : ""}
+                        aria-label="Fuente de financiamiento">
+                          <option value={"pendiente"}>Pendiente</option>
+                          <option value={"en_proceso"}>En proceso</option>
+                          <option value={"finalizado"}>Finalizado</option>
+                        </select>
+
                         <div
                         className="d-flex justify-content-between">
                           <button 
@@ -161,6 +212,32 @@ function ProyectCard({ status }) {
                       ) : (
                         <>
                         <div className="position-relative">
+
+                          <h5>Miembros</h5>
+
+                          <ul  className="list-unstyled mb-5" >
+                          {involvedUsers ? (
+                            involvedUsers.map((user, index) => (
+                              <li key={index}>
+                                {user.user && user.user.profile_picture && (
+                                  <>
+                                    <img src={`http://localhost:8000/${user.user.profile_picture}`}
+                                    alt=""
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="bottom"
+                                    data-bs-title= {`${user.user.first_name} ${user.user.last_name}`}
+                                    width="32"
+                                    height="32"
+                                    className="rounded-circle me-3 " />
+                                  </>
+                                )}
+                              </li>
+                            ))
+                          ) : (
+                            <li>No hay usuarios involucrados</li>
+                          )}
+                          </ul>
+
                           <h5 className="mt-2 fw-medium">Descripción</h5>
                           <p className="mb-5">{selectedTask.description}</p>
                           <h6>Fuente de financiamiento</h6>
@@ -175,16 +252,22 @@ function ProyectCard({ status }) {
                 </div>
 
                 <div className="modal-footer  d-flex justify-content-between">
-                  <i
-                    className={`bi bi-pencil-square edit-link`}
-                    onClick={handleDescriptionEdit}
-                  ></i>
-                  <i
-                  className="bi bi-trash edit-link"
-                  type="button"
-                  data-bs-dismiss="modal"
-                  onClick={() => handleDelete(taskID)}></i>
-                
+                {currentUser && (
+                        <>
+                        {currentUser.groups[0].name === "admins" && (
+                          <>
+                            <i
+                            className={`bi bi-pencil-square edit-link`}
+                            onClick={handleDescriptionEdit}></i>
+                            <i
+                            className="bi bi-trash edit-link"
+                            type="button"
+                            data-bs-dismiss="modal"
+                            onClick={() => handleDelete(taskID)}></i>
+                          </>
+                        )} 
+                        </>
+                        )}
                 </div>
               </div>
             </div>

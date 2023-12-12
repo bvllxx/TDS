@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import { Link,Navigate } from "react-router-dom";
 import login from "../api/AuthApi";
-import { useEffect } from "react";
 
 export function LoginForm(){
 
@@ -10,26 +9,10 @@ export function LoginForm(){
     const [currentUser, setCurrentUser] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
-    /*
-    Esta funcion gestiona la accion del formulario al ser enviado, en este caso, inicia sesion
-    al hacer click en el boton correspondiente
-
-    Se captura el error 400 (bad request) si las credenciales son incorrectas
-    
-    */
-
-/*     useEffect(() => {
-      const token = localStorage.getItem('accessToken');
-      if (token) {
-        setCurrentUser(true);
-      }
-    }, []); */
-
     function submitLogin(e) {
       e.preventDefault();
-      const userData = { email, password };
   
-      login(userData)
+      login({email,password})
         .then(function(res) {
           if (res && res.data && res.data.access) {
             localStorage.setItem('accessToken', res.data.access);
@@ -46,11 +29,9 @@ export function LoginForm(){
           }
         });
     }
-      if (currentUser) {
-        return (
-            <Navigate to="/proyects" />
-        )
-      }
+    if (currentUser) {
+      return (<Navigate to="/proyects" />)
+    }
 
     return(
         <>
@@ -68,7 +49,7 @@ export function LoginForm(){
                         <h3
                         className="mb-5 text-center">Iniciar sesion</h3>
 
-                        {errorMessage && <div class="alert alert-danger" role="alert">{errorMessage}</div>}
+                        {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
 
                         <label
                         className="form-label mb-4"
