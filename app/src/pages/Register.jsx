@@ -5,35 +5,26 @@ import { useEffect } from "react";
 
 export function SignupForm(){
 
+    const [profile_picture, setProfilePicture] = useState('');
     const [email, setEmail] = useState('');
+
     const [password, setPassword] = useState('');
     const [rut, setRut] = useState('');
+    
     const [first_name, setFirstName] = useState('');
     const [last_name, setLastName] = useState('');
+    
     const [occupation, setOccupation] = useState('');
     const [company, setCompanyName] = useState('');
+
     const [institution, setInstitution] = useState('');
     const [phone_number, setPhoneNumber] = useState('');
-
-    useEffect(() => {
-      const forms = document.querySelectorAll('.needs-validation');
-
-      Array.from(forms).forEach(form => {
-          form.addEventListener('submit', event => {
-              if (!form.checkValidity()) {
-                  event.preventDefault();
-                  event.stopPropagation();
-              }
-
-              form.classList.add('was-validated');
-          }, false);
-      });
-  }, []); 
 
     function submitRegistration(e) {
         e.preventDefault();
         const userData =
           {
+            profile_picture:profile_picture,
             rut:rut,
             email: email,
             first_name:first_name,
@@ -45,8 +36,23 @@ export function SignupForm(){
             password: password
           };
         signup(userData);
-      }
-    
+      };
+
+      useEffect(() => {
+
+      const forms = document.querySelectorAll('.needs-validation');
+  
+      Array.from(forms).forEach(form => {
+          form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+              form.classList.add('was-validated');
+          }, false);
+        });
+    }, []); 
+
     return (
         <div
         className="sign-body">
@@ -58,6 +64,20 @@ export function SignupForm(){
               noValidate
               data-bs-theme="dark"
               onSubmit={e => submitRegistration(e)}>
+
+                <label htmlFor="formFile" className="form-label">
+                  Foto de perfil
+                </label>
+
+                <div className="col-md-7">
+                  <input
+                  className="form-control"
+                  type="file"
+                  id="formFile"
+                  value={profile_picture} 
+                  onChange={e => setProfilePicture(e.target.value)}/>
+                </div>
+                    
 
                 <div
                   className="col-md-6">

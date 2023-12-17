@@ -21,15 +21,12 @@ export function MainContent({children}){
         fetchProjects();
         async function fetchUserData() {
             try {
-              // Obtener la información del usuario al iniciar sesión
               const userResponse = await getUserInfo();
-              setCurrentUser(userResponse.data.user); // Almacenar la información del usuario en el estado
-              // Lógica adicional de obtención de proyectos, si es necesario...
+              setCurrentUser(userResponse.data.user); 
             } catch (error) {
               console.error('Error al obtener la información del usuario', error.message);
             }
           }fetchUserData()
-        
     }, []);
 
     const handleSearch = (e) => {
@@ -126,8 +123,6 @@ export function MainContent({children}){
                         <>
                         {currentUser.groups[0].name === "admins" && (
                         <ul className="bmenu p-0">
-                            
-                            
                             <li
                             data-bs-toggle="offcanvas" 
                             data-bs-target="#offcanvasTop"
@@ -213,9 +208,7 @@ export function MainContent({children}){
                                             </button>
                                 </form>
                             </div>
-
                         </div>
-
                     </div>
 
                     <div
@@ -231,6 +224,7 @@ export function MainContent({children}){
                                 </>
                                 )}
                             </a>
+
                             <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
                                 <li><Link className="text-white dropdown-item" to="/" onClick={handleLogout}>Cerrar sesion</Link></li>
                                 <li><hr className="dropdown-divider"/></li>

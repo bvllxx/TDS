@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { getProjects,deleteProject, updateProject } from "../api/ProyectsApi";
 import { getInvolvedUsers, getUserInfo } from "../api/AuthApi";
-import { Tooltip } from "bootstrap";
+
 
 
 function ProyectCard({ status }) {
@@ -18,9 +18,6 @@ function ProyectCard({ status }) {
   const [involvedUsers, setInvolvedUsers] = useState(['']);
 
   useEffect(() => {
-
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl))
 
     async function loadTasks() {
       const res = await getProjects();
@@ -53,7 +50,6 @@ function ProyectCard({ status }) {
         setInvolvedUsers(usersInfo);
       }
     }
-    
     fetchInvolvedUsersData(selectedTask?.involved_users || []); 
   }, [selectedTask]);
 
@@ -111,6 +107,7 @@ function ProyectCard({ status }) {
             key={task.id}
             draggable="true"
           >
+
             <p className="fw-bold">{task.title}</p>
 
             <div 
@@ -218,17 +215,15 @@ function ProyectCard({ status }) {
                           <ul  className="list-unstyled mb-5" >
                           {involvedUsers ? (
                             involvedUsers.map((user, index) => (
-                              <li key={index}>
+                              <li className="mt-3" key={index}>
                                 {user.user && user.user.profile_picture && (
                                   <>
                                     <img src={`http://localhost:8000/${user.user.profile_picture}`}
                                     alt=""
-                                    data-bs-toggle="tooltip"
-                                    data-bs-placement="bottom"
-                                    data-bs-title= {`${user.user.first_name} ${user.user.last_name}`}
-                                    width="32"
-                                    height="32"
+                                    width="42"
+                                    height="42"
                                     className="rounded-circle me-3 " />
+                                    <strong> {`${user.user.first_name} ${user.user.last_name}`}</strong>
                                   </>
                                 )}
                               </li>
