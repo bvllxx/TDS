@@ -17,6 +17,8 @@ function ProyectCard({ status }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [involvedUsers, setInvolvedUsers] = useState(['']);
 
+  
+
   useEffect(() => {
 
     async function loadTasks() {

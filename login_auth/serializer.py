@@ -12,6 +12,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user_obj = UserModel.objects.create_user(
+            profile_picture=validated_data['profile_picture'],
             rut=validated_data['rut'],
             email=validated_data['email'],
             password=validated_data['password'],
@@ -19,6 +20,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             last_name=validated_data.get('last_name', ''),
             occupation=validated_data.get('occupation')
         )
+        
         return user_obj
 
 class UserLoginSerializer(serializers.Serializer):

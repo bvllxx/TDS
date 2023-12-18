@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import getProjects, { addProject } from "../api/ProyectsApi";
 import { getUserInfo, logout } from "../api/AuthApi";
 import React, { useEffect,useState } from "react";
+import UserList from "../components/UserList";
 
 export function MainContent({children}){
     
@@ -12,6 +13,7 @@ export function MainContent({children}){
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [currentUser, setCurrentUser] = useState(null);
+
 
     useEffect(() => {
         async function fetchProjects() {
@@ -28,6 +30,7 @@ export function MainContent({children}){
             }
           }fetchUserData()
     }, []);
+
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);
@@ -179,6 +182,8 @@ export function MainContent({children}){
                                     id="floatingTextarea2"
                                     {...register("description",
                                     {required:true})} ></textarea>
+
+
                                     
                                     <hr />
 
@@ -187,8 +192,10 @@ export function MainContent({children}){
                                     value={selectedOption}
                                     onChange={handleChange}
                                     aria-label="Fuente de financiamiento">
-                                        <option value={"interna"}>Interna</option>
-                                        <option>Externa</option>
+                                        <option value={"Inacap"}
+                                        {...register("founding_src_name", {required:true})}
+                                        >Interna</option>
+                                        <option value={"Externa"}>Externa</option>
                                     </select>
 
                                     {selectedOption === "Externa" && (
@@ -199,13 +206,15 @@ export function MainContent({children}){
                                         placeholder="Nombre de la empresa"
                                         aria-describedby="addon-wrapping" />
                                     )}
+
                                     <button
-                                            className="btn btn-outline-success"
-                                            data-bs-dismiss="offcanvas"
-                                            type="submit"
-                                            onClick={() => {window.location.reload()}}>
-                                                Añadir
-                                            </button>
+                                    className="btn btn-outline-success"
+                                    data-bs-dismiss="offcanvas"
+                                    type="submit"
+                                    onClick={() => {window.location.reload()}}>
+                                        Añadir
+                                    </button>
+
                                 </form>
                             </div>
                         </div>

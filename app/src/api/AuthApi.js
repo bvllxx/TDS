@@ -1,12 +1,11 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-/* Se definen las credenciales csrf para las proteccciones*/
+/* Se definen las credenciales csrf para las proteccciones*/ 
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
-
 
 /*Se crea una instancia de axios  con las credenciales para
 poder realizar las consultas al backend*/
@@ -38,6 +37,6 @@ export const logout = () => {return localStorage.removeItem('accessToken')};
 
 export const getUserInfo = () => { return client.get('auth/user/')};
 
-export const getInvolvedUsers = (id) => { return client.get(`auth/users/${id}/`)}
+export const getInvolvedUsers = (id) => { return client.get(`auth/users/${id}/`,id)}
 
 export default login
