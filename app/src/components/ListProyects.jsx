@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import '../App.css';
 import ProyectCard from "./ProyectCard";
 
@@ -7,10 +7,12 @@ export function ProyectContent(){
     <>
         <div
         className="li-container">
-            <h1
-            className="li-title">Pendientes</h1>
-            <hr
-            className="separator" />
+            <div className="title-section">
+                <h1
+                className="li-title">Pendientes</h1>
+                <hr
+                className="separator" />
+            </div>
             <ul
             className="pcards">
                 <ProyectCard

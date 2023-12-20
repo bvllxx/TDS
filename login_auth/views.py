@@ -26,7 +26,6 @@ class UserView(APIView):
         return Response({'user': serializer.data}, status=status.HTTP_200_OK)
     
 class UserRegister(APIView):
-	permission_classes = (permissions.AllowAny,)
 	def post(self, request):
 		clean_data = custom_validation(request.data)
 		serializer = UserRegisterSerializer(data=clean_data)
@@ -47,3 +46,13 @@ class UserDetailView(APIView):
             return Response({'user': serializer.data}, status=status.HTTP_200_OK)
         except user.DoesNotExist:
             return Response({'error': 'El usuario no existe.'}, status=status.HTTP_404_NOT_FOUND)
+        
+
+class ListUsers(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self,request):
+        users = AppUser.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response({'users': serializer.data}, status=status.HTTP_200_OK)
+             

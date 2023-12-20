@@ -42,5 +42,4 @@ export const updateProject = (taskId,data ) => { return taskApi.put(`update/${ta
 export const deleteProject = (taskId) => {return taskApi.delete(`delete/${taskId}/`)};
 
 
-
 export default getProjects;
