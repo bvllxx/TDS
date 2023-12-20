@@ -47,3 +47,13 @@ class UserDetailView(APIView):
             return Response({'user': serializer.data}, status=status.HTTP_200_OK)
         except user.DoesNotExist:
             return Response({'error': 'El usuario no existe.'}, status=status.HTTP_404_NOT_FOUND)
+        
+
+class ListUsers(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self,request):
+        users = AppUser.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response({'users': serializer.data}, status=status.HTTP_200_OK)
+             

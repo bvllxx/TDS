@@ -1,8 +1,7 @@
-.log-body {
+.custom-body {
   display: flex;
-  align-items: center;
   height: 100vh;
-  background-color:#888888; 
+  background: #919191;
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -11,15 +10,35 @@
   flex-direction: column;
   background-color: #1d1d1b;
   color: white;
-  padding: 20px;
-  width: 1000px;
   height: 100vh;
 }
 
 .log-form{
   display: flex;
-  justify-content: center;
-  margin: 30px;
-  width: 500px;
+  padding: 40px;
+  width: 400px;
   flex-direction: column;
+}
+
+.log-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 60px;
+}
+
+.log-start{
+  text-align: center;
+  padding-right: 150px;
+  padding-top: 60px;
+
+}
+
+.log-body {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+
+}
+
+.log-subtitle {
+  font-weight: 700;
 }

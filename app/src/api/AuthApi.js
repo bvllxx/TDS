@@ -39,4 +39,6 @@ export const getUserInfo = () => { return client.get('auth/user/')};
 
 export const getInvolvedUsers = (id) => { return client.get(`auth/users/${id}/`,id)}
 
+export const getAllUsers = () => { return client.get(`auth/list_users/`)}
+
 export default login
