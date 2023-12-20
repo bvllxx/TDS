@@ -26,7 +26,6 @@ class UserView(APIView):
         return Response({'user': serializer.data}, status=status.HTTP_200_OK)
     
 class UserRegister(APIView):
-	permission_classes = (permissions.AllowAny,)
 	def post(self, request):
 		clean_data = custom_validation(request.data)
 		serializer = UserRegisterSerializer(data=clean_data)

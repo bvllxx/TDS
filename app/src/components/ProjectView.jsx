@@ -55,9 +55,7 @@ export function ProjectModal({ selectedTask , taskID, setSelectedTask,tasks,setT
             );
             setInvolvedUsers(usersInfo);
           }
-        }
-    
-        fetchInvolvedUsersData(selectedTask?.involved_users || []); 
+        }fetchInvolvedUsersData(selectedTask?.involved_users || []); 
 
           if (modalRef.current) {
             modalRef.current.addEventListener('hidden.bs.modal', () => {

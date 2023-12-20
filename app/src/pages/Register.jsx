@@ -1,10 +1,15 @@
 import React, {useState} from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { signup } from "../api/AuthApi";
 import { useEffect } from "react";
 import thumbnail from "../assets/thumbnail.png"; // Importa la imagen
+import { useNavigate } from 'react-router-dom';
+
 
 export function SignupForm(){
+
+    const navigate = useNavigate();
+
 
     const [profile_picture, setProfilePicture] = useState('');
     const [email, setEmail] = useState('');
@@ -39,6 +44,7 @@ export function SignupForm(){
             password: password
           };
         signup(userData);
+        navigate('/')
       };
 
       useEffect(() => {
@@ -358,36 +364,6 @@ export function SignupForm(){
                       <div
                       className="invalid-feedback">
                         Este campo es obligatorio!
-                      </div>
-
-                  </div>
-
-                  <div
-                    className="col-md-9">
-
-                      <label
-                      for="nameID"
-                      className="form-label"
-                      required
-                      minLength={8}
-                      maxLength={30}>
-                        Repetir contraseña
-                      </label>
-
-                      <input
-                      type="password"
-                      className="form-control"
-                      id="nameID"
-                      required />
-
-                      <div
-                      className="valid-feedback"> 
-                        Todo bien!
-                      </div>
-
-                      <div
-                      className="invalid-feedback">
-                        * La contraseña debe tener 8 caracteres como minimo
                       </div>
 
                   </div>
